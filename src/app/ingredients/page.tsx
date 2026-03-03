@@ -1,3 +1,5 @@
+import Title from "@/components/UI/Title";
+
 export default function Page() {
-  return <h1 className="text-3xl font-bold text-center mt-10">Ingredients Page</h1>;
+  return <Title />;
 }
