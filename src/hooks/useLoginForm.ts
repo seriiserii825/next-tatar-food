@@ -1,9 +1,11 @@
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
 export default function useLoginForm() {
+  const router = useRouter();
   const schema = z.object({
     email: z.string().email("Invalid email"),
     password: z.string().min(6, "Min 6 characters"),
@@ -51,6 +53,7 @@ export default function useLoginForm() {
       return;
     }
     toast.success("Logged in successfully!");
+    router.push("/about");
   }
 
   return {

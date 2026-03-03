@@ -1,9 +1,11 @@
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
 export default function useRegisterForm() {
+  const router = useRouter();
   const schema = z
     .object({
       name: z.string().min(2, "Min 2 characters").optional(),
@@ -53,7 +55,7 @@ export default function useRegisterForm() {
     setErrors({});
 
     const { error } = await authClient.signUp.email({
-      name: result.data.email,
+      name: result.data.name || "",
       email: result.data.email,
       password: result.data.password,
     });
@@ -63,6 +65,7 @@ export default function useRegisterForm() {
       return;
     }
     toast.success("Registered successfully!");
+    router.push("/auth/login");
   }
 
   return {
