@@ -2,12 +2,28 @@
 
 import { Input } from "@/components/ui/input";
 import ShowError from "@/components/UI/ShowError";
-import useLoginForm from "@/hooks/useLoginForm";
+import useRegisterForm from "@/hooks/useRegisterForm";
 
-export function LoginForm() {
-  const { form, handleChange, errors, firstTouch, onSubmit } = useLoginForm();
+export function RegisterForm() {
+  const { form, handleChange, errors, firstTouch, onSubmit } =
+    useRegisterForm();
   return (
-    <form onSubmit={onSubmit} autoComplete="off" className="max-w-lg mx-auto flex flex-col gap-4">
+    <form
+      onSubmit={onSubmit}
+      autoComplete="off"
+      className="mx-auto flex max-w-lg flex-col gap-4"
+    >
+      <Input
+        type="text"
+        name="my-name"
+        autoComplete="nope"
+        placeholder="Name"
+        aria-invalid={errors.name && firstTouch}
+        value={form.name}
+        onChange={(e) => handleChange("name", e.target.value)}
+        className="rounded border p-2"
+      />
+      {firstTouch && errors.name && <ShowError error={errors.name[0]} />}
       <Input
         type="email"
         name="my-email"
@@ -16,7 +32,7 @@ export function LoginForm() {
         aria-invalid={errors.email && firstTouch}
         value={form.email}
         onChange={(e) => handleChange("email", e.target.value)}
-        className="border p-2 rounded"
+        className="rounded border p-2"
       />
       {firstTouch && errors.email && <ShowError error={errors.email[0]} />}
       <Input
@@ -27,12 +43,26 @@ export function LoginForm() {
         aria-invalid={errors.password && firstTouch}
         value={form.password}
         onChange={(e) => handleChange("password", e.target.value)}
-        className="border p-2 rounded"
+        className="rounded border p-2"
       />
-      {firstTouch && errors.password && <ShowError error={errors.password[0]} />}
+      {firstTouch && errors.password && (
+        <ShowError error={errors.password[0]} />
+      )}
+      <Input
+        type="password"
+        name="my-confirm-password"
+        placeholder="Confirm Password"
+        value={form.confirmPassword}
+        onChange={(e) => handleChange("confirmPassword", e.target.value)}
+        aria-invalid={errors.confirmPassword && firstTouch}
+        className="rounded border p-2"
+      />
+      {firstTouch && errors.confirmPassword && (
+        <ShowError error={errors.confirmPassword[0]} />
+      )}
 
-      <button type="submit" className=" bg-blue-500 text-white p-2 rounded">
-        Login
+      <button type="submit" className="rounded bg-blue-500 p-2 text-white">
+        Register
       </button>
     </form>
   );

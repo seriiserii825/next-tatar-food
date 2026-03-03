@@ -1,3 +1,4 @@
+import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -29,21 +30,29 @@ export default function useLoginForm() {
     }
   }
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFirstTouch(true);
 
     const result = schema.safeParse(form);
     if (!result.success) {
-      const errors = result.error.flatten().fieldErrors;
-      setErrors(errors);
+      setErrors(result.error.flatten().fieldErrors);
       return;
     }
     setErrors({});
-    console.log(result.data, "result.data");
-    toast.success("Form login successfully!");
-    // result.data — типизированные данные
+
+    const { error } = await authClient.signIn.email({
+      email: result.data.email,
+      password: result.data.password,
+    });
+
+    if (error) {
+      toast.error(error.message ?? "Login failed");
+      return;
+    }
+    toast.success("Logged in successfully!");
   }
+
   return {
     form,
     setForm,

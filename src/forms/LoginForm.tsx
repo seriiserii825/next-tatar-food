@@ -2,10 +2,10 @@
 
 import { Input } from "@/components/ui/input";
 import ShowError from "@/components/UI/ShowError";
-import useRegisterForm from "@/hooks/useRegisterForm";
+import useLoginForm from "@/hooks/useLoginForm";
 
-export function RegisterForm() {
-  const { form, handleChange, errors, firstTouch, onSubmit } = useRegisterForm();
+export function LoginForm() {
+  const { form, handleChange, errors, firstTouch, onSubmit } = useLoginForm();
   return (
     <form onSubmit={onSubmit} autoComplete="off" className="max-w-lg mx-auto flex flex-col gap-4">
       <Input
@@ -30,19 +30,9 @@ export function RegisterForm() {
         className="border p-2 rounded"
       />
       {firstTouch && errors.password && <ShowError error={errors.password[0]} />}
-      <Input
-        type="password"
-        name="my-confirm-password"
-        placeholder="Confirm Password"
-        value={form.confirmPassword}
-        onChange={(e) => handleChange("confirmPassword", e.target.value)}
-        aria-invalid={errors.confirmPassword && firstTouch}
-        className="border p-2 rounded"
-      />
-      {firstTouch && errors.confirmPassword && <ShowError error={errors.confirmPassword[0]} />}
 
       <button type="submit" className=" bg-blue-500 text-white p-2 rounded">
-        Register
+        Login
       </button>
     </form>
   );
