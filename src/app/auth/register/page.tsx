@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="pt-20">
-      <div className="p-8 bg-white rounded shadow max-w-md mx-auto">
+      <div className="p-8 bg-white rounded-lg shadow max-w-md mx-auto">
         <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
         <RegisterForm />
         <div className="mt-4 text-center">
