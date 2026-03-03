@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="pt-20">
-      <div className="p-8 bg-white shadow max-w-md mx-auto rounded-lg">
-        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+      <div className="mx-auto max-w-md rounded-lg bg-white p-8 shadow">
+        <h1 className="mb-6 text-center text-2xl font-bold">Login</h1>
         <LoginForm />
         <div className="mt-4 text-center">
           <p>Don't have an account?</p>
