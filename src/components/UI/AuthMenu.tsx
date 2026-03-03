@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function AuthMenu() {
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
   const router = useRouter();
 
   async function handleLogout() {
@@ -15,26 +15,29 @@ export default function AuthMenu() {
     router.push("/auth/login");
   }
 
+  if (isPending) return <div>Loading...</div>;
+
   if (session) {
     return (
-      <nav className="flex gap-4 items-center">
+      <nav className="flex items-center gap-4">
         <span className="text-sm text-gray-500">{session.user.email}</span>
         <button
           onClick={handleLogout}
-          className="hover:text-amber-600 transition duration-300">
+          className="transition duration-300 hover:text-amber-600"
+        >
           Logout
         </button>
       </nav>
     );
   }
-
   return (
     <nav className="flex gap-4">
       {siteConfig.authMenu.map((link, index) => (
         <Link
           href={link.href}
           key={index}
-          className={`hover:text-amber-600 transition duration-300 ${useSetActiveLink(link.href)}`}>
+          className={`transition duration-300 hover:text-amber-600 ${useSetActiveLink(link.href)}`}
+        >
           {link.name}
         </Link>
       ))}
