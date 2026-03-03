@@ -9,5 +9,9 @@ export default async function Page() {
   if (!session) {
     redirect("/");
   }
-  return <h1>Welcome {session.user.name}</h1>;
+  return (
+    <div className="container">
+      <h1>Welcome {session.user.name}</h1>
+    </div>
+  );
 }
