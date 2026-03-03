@@ -1,3 +1,4 @@
+import registerUser from "@/actions/registerUser";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -37,7 +38,7 @@ export default function useRegisterForm() {
     }
   }
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFirstTouch(true);
 
@@ -48,8 +49,13 @@ export default function useRegisterForm() {
       return;
     }
     setErrors({});
+    const response = await registerUser(form);
+    console.log("response", response);
+    if ("error" in response) {
+      toast.error(response.error);
+      return;
+    }
     toast.success("Form register successfully!");
-    // result.data — типизированные данные
   }
   return {
     form,
