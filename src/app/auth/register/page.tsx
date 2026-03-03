@@ -1,3 +1,12 @@
+import { RegisterForm } from "@/forms/RegisterForm";
+
 export default function Page() {
-  return <h1 className="text-3xl font-bold text-center mt-10">Register</h1>;
+  return (
+    <div className="pt-20">
+      <div className="p-8 bg-white rounded shadow max-w-md mx-auto">
+        <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
+        <RegisterForm />
+      </div>
+    </div>
+  );
 }

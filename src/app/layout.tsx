@@ -33,7 +33,25 @@ export default function RootLayout({
           <Header />
           <div className="flex-1 overflow-x-hidden">{children}</div>
           <Footer />
-          <Toaster position="top-right" />
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{}}
+            toasterId="default"
+            toastOptions={{
+              // Define default options
+              className: "",
+              duration: 5000,
+              removeDelay: 1000,
+
+              // Default options for specific types
+              success: {
+                duration: 2000,
+              },
+            }}
+          />
         </div>
       </body>
     </html>
