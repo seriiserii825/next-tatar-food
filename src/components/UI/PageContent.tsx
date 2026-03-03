@@ -1,7 +1,7 @@
 "use client";
 import { siteConfig } from "@/config/siteConfig";
 import { usePathname } from "next/navigation";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import parse from "html-react-parser";
 
 interface IPageContentProps {
@@ -17,10 +17,7 @@ export default function PageContent({
   if (!pageContent) {
     return <div>Page not found</div>;
   }
-  const clean =
-    typeof window !== "undefined"
-      ? DOMPurify.sanitize(pageContent.text)
-      : pageContent.text;
+  const clean = DOMPurify.sanitize(pageContent.text);
   const defaultClasses = "text-content mx-auto max-w-3xl pb-16";
   const alignCenterClasses = alignCenter ? "text-center" : "";
   const classes = `${defaultClasses} ${alignCenterClasses}`;
