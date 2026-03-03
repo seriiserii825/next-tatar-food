@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="pt-20">
+    <div className="py-20">
       <div className="mx-auto max-w-md rounded-lg bg-white p-8 shadow">
         <h1 className="mb-6 text-center text-2xl font-bold">Login</h1>
         <LoginForm />
