@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "@/components/UI/Footer";
 import Header from "@/components/UI/Header";
-import "@/globals.css";
-import { siteConfig } from "./config/siteConfig";
+import { siteConfig } from "@/config/siteConfig";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Header />
           <div className="flex-1 overflow-x-hidden">{children}</div>
           <Footer />
+          <Toaster position="top-right" />
         </div>
       </body>
     </html>
