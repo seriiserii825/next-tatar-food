@@ -2,10 +2,10 @@
 
 import { Input } from "@/components/ui/input";
 import ShowError from "@/components/UI/ShowError";
-import useLoginForm from "@/hooks/useLoginForm";
+import useRegisterForm from "@/hooks/useRegisterForm";
 
-export function LoginForm() {
-  const { form, handleChange, errors, firstTouch, onSubmit } = useLoginForm();
+export function RegisterForm() {
+  const { form, handleChange, errors, firstTouch, onSubmit } = useRegisterForm();
   return (
     <form onSubmit={onSubmit} autoComplete="off" className="max-w-lg mx-auto flex flex-col gap-4">
       <Input
@@ -42,7 +42,7 @@ export function LoginForm() {
       {firstTouch && errors.confirmPassword && <ShowError error={errors.confirmPassword[0]} />}
 
       <button type="submit" className=" bg-blue-500 text-white p-2 rounded">
-        Login
+        Register
       </button>
     </form>
   );

@@ -3,21 +3,29 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 
 export default function useRegisterForm() {
-  const schema = z.object({
-    email: z.string().email("Invalid email"),
-    password: z.string().min(6, "Min 6 characters"),
-  });
+  const schema = z
+    .object({
+      email: z.string().email("Invalid email"),
+      password: z.string().min(6, "Min 6 characters"),
+      confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    });
 
   type FormData = z.infer<typeof schema>;
 
   const [form, setForm] = useState<FormData>({
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [firstTouch, setFirstTouch] = useState(false);
   const [errors, setErrors] = useState<{
     email?: string[];
     password?: string[];
+    confirmPassword?: string[];
   }>({});
 
   function handleChange(field: keyof FormData, value: string) {
@@ -40,7 +48,6 @@ export default function useRegisterForm() {
       return;
     }
     setErrors({});
-    console.log(result.data, "result.data");
     toast.success("Form register successfully!");
     // result.data — типизированные данные
   }
