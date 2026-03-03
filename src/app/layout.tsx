@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "@/components/UI/Footer";
 import Header from "@/components/UI/Header";
 import "@/globals.css";
+import { siteConfig } from "./config/siteConfig";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tatar cuisine",
-  description:
-    "A collection of traditional Tatar recipes, showcasing the rich culinary heritage of the Tatar people. Explore a variety of dishes, from hearty soups to delicious pastries, all made with authentic ingredients and time-honored techniques.",
+  title: siteConfig.title,
+  description: siteConfig.description,
 };
 
 export default function RootLayout({

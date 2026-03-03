@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/siteConfig";
 import Link from "next/link";
 
 export default function Logo() {
@@ -6,7 +7,7 @@ export default function Logo() {
       <div className="w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center text-white font-bold">
         🍲
       </div>
-      <span className="text-xl font-semibold tracking-tight">Home Recipes</span>
+      <span className="text-xl font-semibold tracking-tight">{siteConfig.title}</span>
     </Link>
   );
 }

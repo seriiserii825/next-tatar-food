@@ -1,26 +1,22 @@
 "use client";
 
+import { siteConfig } from "@/config/siteConfig";
 import useSetActiveLink from "@/hooks/useSetActiveLink";
-import { ILink } from "@/interfaces/ILink";
 import Link from "next/link";
 
 export default function Menu() {
-  const links: ILink[] = [
-    { name: "Recipes", href: "/" },
-    { name: "Ingredients", href: "/ingredients" },
-    { name: "About", href: "/about" },
-  ];
+  function displayMenu() {
+    return siteConfig.menu.map((link, index) => (
+      <Link
+        href={link.href}
+        key={index}
+        className={`hover:text-amber-600 transition duration-300 ${useSetActiveLink(link.href)}`}>
+        {link.name}
+      </Link>
+    ));
+  }
 
   return (
-    <nav className="hidden md:flex gap-8 text-sm font-medium text-zinc-600">
-      {links.map((link, index) => (
-        <Link
-          href={link.href}
-          key={index}
-          className={`hover:text-amber-600 transition duration-300 ${useSetActiveLink(link.href)}`}>
-          {link.name}
-        </Link>
-      ))}
-    </nav>
+    <nav className="hidden md:flex gap-8 text-sm font-medium text-zinc-600">{displayMenu()}</nav>
   );
 }
