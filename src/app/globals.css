@@ -132,4 +132,24 @@
   button:disabled {
     @apply cursor-not-allowed opacity-50;
   }
+  .text-content {
+    h2 {
+      @apply mt-8 mb-4 text-2xl leading-9 font-semibold;
+    }
+    h3 {
+      @apply mt-8 mb-4 text-xl leading-8 font-semibold;
+    }
+    h4 {
+      @apply mt-8 mb-4 text-lg leading-7 font-semibold;
+    }
+    p {
+      @apply mb-4 leading-7 [&:not(:first-child)]:mt-6;
+    }
+    ul {
+      @apply my-6 ml-6 list-disc [&>li]:mt-2;
+    }
+    li {
+      @apply [&:has(p)]:mt-0;
+    }
+  }
 }

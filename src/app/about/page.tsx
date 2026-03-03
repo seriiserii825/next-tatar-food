@@ -1,3 +1,4 @@
+import PageContent from "@/components/UI/PageContent";
 import Title from "@/components/UI/Title";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -14,6 +15,7 @@ export default async function Page() {
   return (
     <div className="container">
       <Title />
+      <PageContent alignCenter={true} />
     </div>
   );
 }
