@@ -123,4 +123,8 @@
   body {
     @apply bg-background text-foreground;
   }
+  .container {
+    @apply mx-auto px-4;
+  }
 }
+
