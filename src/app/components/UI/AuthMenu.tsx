@@ -4,20 +4,18 @@ import useSetActiveLink from "@/hooks/useSetActiveLink";
 import { ILink } from "@/interfaces/ILink";
 import Link from "next/link";
 
-export default function Menu() {
+export default function AuthMenu() {
   const links: ILink[] = [
-    { name: "Recipes", href: "/" },
-    { name: "Ingredients", href: "/ingredients" },
-    { name: "About", href: "/about" },
+    { name: "Login", href: "/auth/login" },
+    { name: "Register", href: "/auth/register" },
   ];
-
   return (
-    <nav className="hidden md:flex gap-8 text-sm font-medium text-zinc-600">
+    <nav className="flex gap-4">
       {links.map((link, index) => (
         <Link
           href={link.href}
           key={index}
-          className={`hover:text-amber-600 transition duration-300 ${useSetActiveLink(link.href)}`}>
+          className={`${useSetActiveLink(link.href)} text-sm font-medium text-zinc-600 hover:text-amber-600 transition duration-300`}>
           {link.name}
         </Link>
       ))}
