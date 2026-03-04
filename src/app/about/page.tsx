@@ -6,8 +6,7 @@ import { redirect } from "next/navigation";
 export default async function Page() {
   const { error } = await requireSession();
   if (error) {
-    console.error(error, "error");
-    redirect("/");
+    redirect("/?error=Unauthorized");
   }
   return (
     <div className="container">

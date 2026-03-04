@@ -1,8 +1,13 @@
+import ErrorToast from "@/components/UI/ErrorToast";
 import Title from "@/components/UI/Title";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
     <>
+      <Suspense>
+        <ErrorToast />
+      </Suspense>
       <Title />
       <section className="mx-auto mt-16 max-w-7xl px-6 pb-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
