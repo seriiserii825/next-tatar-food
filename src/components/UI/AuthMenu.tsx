@@ -1,14 +1,15 @@
 "use client";
 import { siteConfig } from "@/config/siteConfig";
-import useSetActiveLink from "@/hooks/useSetActiveLink";
 import { authClient } from "@/lib/auth-client";
 import { User } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 export default function AuthMenu() {
   const { data: session, isPending } = authClient.useSession();
   const router = useRouter();
+  const pathname = usePathname();
 
   async function handleLogout() {
     await authClient.signOut();
@@ -26,7 +27,7 @@ export default function AuthMenu() {
         </span>
         <button
           onClick={handleLogout}
-          className="transition duration-300 text-sm hover:text-amber-600"
+          className="text-sm transition duration-300 hover:text-amber-600"
         >
           Logout
         </button>
@@ -39,7 +40,7 @@ export default function AuthMenu() {
         <Link
           href={link.href}
           key={index}
-          className={`transition duration-300 hover:text-amber-600 ${useSetActiveLink(link.href)}`}
+          className={`transition duration-300 hover:text-amber-600 ${pathname === link.href ? "text-amber-600" : ""}`}
         >
           {link.name}
         </Link>
