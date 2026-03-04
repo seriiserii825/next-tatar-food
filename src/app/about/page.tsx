@@ -1,15 +1,12 @@
 import PageContent from "@/components/UI/PageContent";
 import Title from "@/components/UI/Title";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { requireSession } from "@/lib/auth-session";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  console.log(session, "session");
-  if (!session) {
+  const { error } = await requireSession();
+  if (error) {
+    console.error(error, "error");
     redirect("/");
   }
   return (
