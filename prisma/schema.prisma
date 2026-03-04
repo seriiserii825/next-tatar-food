@@ -17,8 +17,6 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
-
-  @@map("users")
 }
 
 model Session {
@@ -31,8 +29,6 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("session")
 }
 
 model Account {
@@ -50,8 +46,6 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
-
-  @@map("account")
 }
 
 model Verification {
@@ -61,6 +55,34 @@ model Verification {
   expiresAt  DateTime
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
+}
 
-  @@map("verification")
+model Ingredient {
+  id           String   @id @default(cuid())
+  name         String
+  category     Category
+  unit         Unit
+  pricePerUnit Float    @map("price_per_unit")
+  description  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("ingredients")
+}
+
+enum Category {
+  vegetable
+  fruit
+  meat
+  dairy
+  spices
+  other
+}
+
+enum Unit {
+  gram
+  kilogram
+  liters
+  milliliters
+  pieces
 }

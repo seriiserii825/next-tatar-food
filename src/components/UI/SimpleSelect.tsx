@@ -27,14 +27,18 @@ export default function SimpleSelect({
   label,
   placeholder,
   options,
+  handleChange,
 }: SimpleSelectProps) {
   const [value, setValue] = useState("");
 
-  function handleChange(newValue: string) {
-    setValue(newValue);
-  }
   return (
-    <Select value={value} onValueChange={handleChange}>
+    <Select
+      value={value}
+      onValueChange={(newValue) => {
+        setValue(newValue);
+        handleChange(newValue);
+      }}
+    >
       <SelectTrigger className="w-full max-w-48">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
