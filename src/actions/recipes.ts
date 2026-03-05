@@ -16,3 +16,7 @@ export default async function getRecipes() {
     recipes,
   };
 }
+
+export async function createRecipe(formData: any) {
+
+}
