@@ -9,18 +9,18 @@ import { CATEGORY_OPTIONS, UNIT_OPTIONS } from "@/constants/select_options";
 import useIngredientForm from "@/hooks/useIngredientForm";
 
 export default function IngredientForm() {
-  const { handlerSubmit, handleChange, formData, firstTouch, errors } =
+  const { onSubmit, handleChange, form, firstTouch, errors } =
     useIngredientForm();
   return (
     <form
-      onSubmit={handlerSubmit}
+      onSubmit={onSubmit}
       className="flex flex-col gap-4 rounded bg-white p-4 shadow-md"
     >
       <Input
         type="text"
         className="w-full"
         placeholder="Ingredient Name"
-        value={formData.name}
+        value={form.name}
         onChange={(e) => handleChange("name", e.target.value)}
       />
       {firstTouch && errors.name && <ShowError error={errors.name[0]} />}
@@ -50,7 +50,7 @@ export default function IngredientForm() {
             type="number"
             className="w-full"
             placeholder="Price per unit"
-            value={formData.pricePerUnit ?? ""}
+            value={form.pricePerUnit ?? ""}
             onChange={(e) => handleChange("pricePerUnit", e.target.value)}
           />
           {firstTouch && errors.pricePerUnit && (
@@ -60,7 +60,7 @@ export default function IngredientForm() {
       </div>
       <Textarea
         placeholder="Type your message here."
-        value={formData.description}
+        value={form.description}
         onChange={(e) => handleChange("description", e.target.value)}
       />
       {firstTouch && errors.description && (
