@@ -14,3 +14,7 @@ export default async function createIngredient(formData: TIngredientsFormData) {
     },
   });
 }
+
+export async function getIngredients() {
+  return await prisma.ingredient.findMany();
+}
