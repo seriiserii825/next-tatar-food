@@ -1,4 +1,5 @@
 import IngredientsTable from "@/components/UI/IngredientsTable";
+import IngredientUpdate from "@/components/UI/IngredientUpdate";
 import PageContent from "@/components/UI/PageContent";
 import Title from "@/components/UI/Title";
 import IngredientForm from "@/forms/IngredientForm";
@@ -18,6 +19,7 @@ export default function Page() {
         <div className="mx-auto mt-16 max-w-4xl">
           <IngredientsTable />
         </div>
+        <IngredientUpdate />
       </div>
     </>
   );

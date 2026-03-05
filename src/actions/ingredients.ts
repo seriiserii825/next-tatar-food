@@ -26,3 +26,19 @@ export async function deleteIngredient(id: string) {
     where: { id },
   });
 }
+
+export async function updateIngredient(
+  id: string,
+  formData: TIngredientsFormData,
+) {
+  await prisma.ingredient.update({
+    where: { id },
+    data: {
+      name: formData.name,
+      category: formData.category,
+      unit: formData.unit,
+      pricePerUnit: formData.pricePerUnit,
+      description: formData.description,
+    },
+  });
+}

@@ -2,7 +2,9 @@
 
 import { deleteIngredient, getIngredients } from "@/actions/ingredients";
 import Loading from "@/app/loading";
+import Modal from "@/components/Modal";
 import useQuery from "@/hooks/useQuery";
+import IngredientUpdateForm from "@/forms/IngredientUpdateForm";
 import { useWasChanged } from "@/store/ingredientsStore";
 import { Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -16,6 +18,10 @@ export default function IngredientsTable() {
   const { data, loading, error, refetch } = useQuery(getIngredients);
 
   const [pendingId, setPendingId] = useState<string | null>(null);
+
+  type Ingredient = NonNullable<typeof data>[number];
+  const [editingIngredient, setEditingIngredient] =
+    useState<Ingredient | null>(null);
 
   useEffect(() => {
     if (wasChanged) refetch();
@@ -83,7 +89,10 @@ export default function IngredientsTable() {
                     {ingredient.pricePerUnit}
                   </td>
                   <td className="flex gap-2 space-x-2 px-6 py-4 text-right">
-                    <button className="flex w-8 items-center justify-center gap-1 rounded-lg bg-amber-100 py-1 text-sm text-amber-700 hover:bg-amber-200">
+                    <button
+                      onClick={() => setEditingIngredient(ingredient)}
+                      className="flex w-8 items-center justify-center gap-1 rounded-lg bg-amber-100 py-1 text-sm text-amber-700 hover:bg-amber-200"
+                    >
                       <Pencil size={16} />
                     </button>
                     <button
@@ -99,6 +108,25 @@ export default function IngredientsTable() {
           </tbody>
         </table>
       </div>
+      {editingIngredient && (
+        <Modal title="Edit Ingredient">
+          <IngredientUpdateForm
+            id={editingIngredient.id}
+            initialData={{
+              name: editingIngredient.name,
+              category: editingIngredient.category,
+              unit: editingIngredient.unit,
+              pricePerUnit: editingIngredient.pricePerUnit,
+              description: editingIngredient.description ?? "",
+            }}
+            onSuccess={() => {
+              setEditingIngredient(null);
+              refetch();
+            }}
+          />
+        </Modal>
+      )}
+
       <ConfirmPopup
         open={!!pendingId}
         onOpenChange={(open) => !open && setPendingId(null)}
