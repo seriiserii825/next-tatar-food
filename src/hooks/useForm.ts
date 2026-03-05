@@ -38,7 +38,9 @@ export default function useForm<TFormData extends Record<string, unknown>>(
       const res = await apiFn(result.data);
       onSuccess?.(res);
     } finally {
-      setPending(false);
+      setTimeout(() => {
+        setPending(false);
+      }, 500);
     }
   }
 

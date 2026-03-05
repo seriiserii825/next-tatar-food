@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ShowError from "@/components/UI/ShowError";
 import SimpleSelect from "@/components/UI/SimpleSelect";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { CATEGORY_OPTIONS, UNIT_OPTIONS } from "@/constants/select_options";
 import useIngredientForm from "@/hooks/useIngredientForm";
 
 export default function IngredientForm() {
-  const { onSubmit, handleChange, form, firstTouch, errors } =
+  const { onSubmit, handleChange, form, pending, firstTouch, errors } =
     useIngredientForm();
   return (
     <form
@@ -67,7 +68,8 @@ export default function IngredientForm() {
         <ShowError error={errors.description[0]} />
       )}
       <div className="flex">
-        <Button type="submit" variant={"secondary"}>
+        <Button disabled={pending} type="submit" variant={"secondary"}>
+          {pending && <Spinner data-icon="inline-start" />}
           Submit
         </Button>
       </div>
