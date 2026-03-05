@@ -20,3 +20,9 @@ export async function getIngredients() {
     orderBy: { updatedAt: "desc" },
   });
 }
+
+export async function deleteIngredient(id: string) {
+  await prisma.ingredient.delete({
+    where: { id },
+  });
+}

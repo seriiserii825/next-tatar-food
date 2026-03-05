@@ -1,11 +1,13 @@
 "use client";
 
-import { getIngredients } from "@/actions/ingredients";
+import { deleteIngredient, getIngredients } from "@/actions/ingredients";
 import Loading from "@/app/loading";
 import useQuery from "@/hooks/useQuery";
 import { useWasChanged } from "@/store/ingredientsStore";
 import { Pencil, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import ConfirmPopup from "./ConfirmPopup";
 import ShowError from "./ShowError";
 
 export default function IngredientsTable() {
@@ -13,9 +15,25 @@ export default function IngredientsTable() {
 
   const { data, loading, error, refetch } = useQuery(getIngredients);
 
+  const [pendingId, setPendingId] = useState<string | null>(null);
+
   useEffect(() => {
     if (wasChanged) refetch();
   }, [wasChanged]);
+
+  async function handleConfirmDelete() {
+    if (!pendingId) return;
+    try {
+      await deleteIngredient(pendingId);
+      toast.success("Ingredient deleted successfully");
+      refetch();
+    } catch (error) {
+      console.error("Error deleting ingredient:", error);
+      toast.error("Failed to delete ingredient");
+    } finally {
+      setPendingId(null);
+    }
+  }
 
   if (loading) return <Loading />;
 
@@ -68,7 +86,10 @@ export default function IngredientsTable() {
                     <button className="flex w-8 items-center justify-center gap-1 rounded-lg bg-amber-100 py-1 text-sm text-amber-700 hover:bg-amber-200">
                       <Pencil size={16} />
                     </button>
-                    <button className="flex items-center gap-1 rounded-lg bg-red-100 px-3 py-1 text-sm text-red-700 hover:bg-red-200">
+                    <button
+                      onClick={() => setPendingId(ingredient.id)}
+                      className="flex items-center gap-1 rounded-lg bg-red-100 px-3 py-1 text-sm text-red-700 hover:bg-red-200"
+                    >
                       <Trash2 size={16} />
                     </button>
                   </td>
@@ -78,6 +99,13 @@ export default function IngredientsTable() {
           </tbody>
         </table>
       </div>
+      <ConfirmPopup
+        open={!!pendingId}
+        onOpenChange={(open) => !open && setPendingId(null)}
+        title="Delete Ingredient"
+        description="Are you sure you want to delete this ingredient?"
+        onConfirm={handleConfirmDelete}
+      />
     </section>
   );
 }
