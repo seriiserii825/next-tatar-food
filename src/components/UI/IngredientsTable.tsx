@@ -20,8 +20,9 @@ export default function IngredientsTable() {
   const [pendingId, setPendingId] = useState<string | null>(null);
 
   type Ingredient = NonNullable<typeof data>[number];
-  const [editingIngredient, setEditingIngredient] =
-    useState<Ingredient | null>(null);
+  const [editingIngredient, setEditingIngredient] = useState<Ingredient | null>(
+    null,
+  );
 
   useEffect(() => {
     if (wasChanged) refetch();
@@ -109,7 +110,10 @@ export default function IngredientsTable() {
         </table>
       </div>
       {editingIngredient && (
-        <Modal title="Edit Ingredient">
+        <Modal
+          title="Edit Ingredient"
+          onClose={() => setEditingIngredient(null)}
+        >
           <IngredientUpdateForm
             id={editingIngredient.id}
             initialData={{

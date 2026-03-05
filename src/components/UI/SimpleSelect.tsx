@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -31,20 +30,8 @@ export default function SimpleSelect({
   optionValue,
   handleChange,
 }: SimpleSelectProps) {
-  const [value, setValue] = useState("");
-
-  useEffect(() => {
-    setValue(optionValue);
-  }, [optionValue]);
-
   return (
-    <Select
-      value={value}
-      onValueChange={(newValue) => {
-        setValue(newValue);
-        handleChange(newValue);
-      }}
-    >
+    <Select value={optionValue} onValueChange={handleChange}>
       <SelectTrigger className="w-full max-w-48">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
