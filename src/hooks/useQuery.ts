@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-export default function useQuery<TFn extends (params?: never) => Promise<unknown>>(
-  apiFn: TFn,
-  params?: Parameters<TFn>[0],
-) {
+export default function useQuery<
+  TFn extends (params?: never) => Promise<unknown>,
+>(apiFn: TFn, params?: Parameters<TFn>[0]) {
   type TData = Awaited<ReturnType<TFn>>;
   const [data, setData] = useState<TData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [tick, setTick] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -19,9 +19,12 @@ export default function useQuery<TFn extends (params?: never) => Promise<unknown
         const result = await apiFn(params);
         if (!cancelled) setData(result as TData);
       } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Unknown error");
+        if (!cancelled)
+          setError(e instanceof Error ? e.message : "Unknown error");
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setTimeout(() => setLoading(false), 500); // Add a small delay for better UX
+        }
       }
     }
 
@@ -30,7 +33,9 @@ export default function useQuery<TFn extends (params?: never) => Promise<unknown
     return () => {
       cancelled = true;
     };
-  }, [JSON.stringify(params)]);
+  }, [JSON.stringify(params), tick]);
 
-  return { data, loading, error };
+  const refetch = () => setTick((t) => t + 1);
+
+  return { data, loading, error, refetch };
 }

@@ -12,9 +12,12 @@ import useForm from "@/hooks/useForm";
 import ingredientsSchema, {
   TIngredientsFormData,
 } from "@/schemas/ingredientsSchema";
+import { useSetWasChanged } from "@/store/ingredientsStore";
 import toast from "react-hot-toast";
 
 export default function IngredientForm() {
+  const setWasChanged = useSetWasChanged();
+
   const { onSubmit, handleChange, form, pending, firstTouch, errors } =
     useForm<TIngredientsFormData>(
       ingredientsSchema(),
@@ -30,6 +33,10 @@ export default function IngredientForm() {
     form.unit = "";
     form.pricePerUnit = 0;
     form.description = "";
+    setWasChanged(true);
+    setTimeout(() => {
+      setWasChanged(false);
+    }, 500);
   }
 
   return (

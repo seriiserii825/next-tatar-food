@@ -3,11 +3,19 @@
 import { getIngredients } from "@/actions/ingredients";
 import Loading from "@/app/loading";
 import useQuery from "@/hooks/useQuery";
+import { useWasChanged } from "@/store/ingredientsStore";
 import { Pencil, Trash2 } from "lucide-react";
+import { useEffect } from "react";
 import ShowError from "./ShowError";
 
 export default function IngredientsTable() {
-  const { data, loading, error } = useQuery(getIngredients);
+  const wasChanged = useWasChanged();
+
+  const { data, loading, error, refetch } = useQuery(getIngredients);
+
+  useEffect(() => {
+    if (wasChanged) refetch();
+  }, [wasChanged]);
 
   if (loading) return <Loading />;
 
