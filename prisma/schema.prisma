@@ -58,14 +58,42 @@ model Verification {
 }
 
 model Ingredient {
-  id           String   @id @default(cuid())
+  id           String             @id @default(cuid())
   name         String
   category     String
   unit         String
-  pricePerUnit Float    @map("price_per_unit")
+  pricePerUnit Float              @map("price_per_unit")
   description  String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  recipes      RecipeIngredient[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
 
   @@map("ingredients")
+}
+
+model Recipe {
+  id          String             @id @default(cuid())
+  name        String
+  description String
+  imageUrl    String?            @map("image_url")
+  ingredients RecipeIngredient[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@map("recipes")
+}
+
+model RecipeIngredient {
+  id       String @id @default(cuid())
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipeId String @map("recipe_id")
+
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  ingredientId String     @map("ingredient_id")
+  quantity     Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("recipe_ingredients")
 }
