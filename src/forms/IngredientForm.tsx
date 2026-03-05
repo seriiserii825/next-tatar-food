@@ -1,5 +1,6 @@
 "use client";
 
+import createIngredient from "@/actions/ingredients";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ShowError from "@/components/UI/ShowError";
@@ -7,11 +8,30 @@ import SimpleSelect from "@/components/UI/SimpleSelect";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { CATEGORY_OPTIONS, UNIT_OPTIONS } from "@/constants/select_options";
-import useIngredientForm from "@/hooks/useIngredientForm";
+import useForm from "@/hooks/useForm";
+import ingredientsSchema, {
+  TIngredientsFormData,
+} from "@/schemas/ingredientsSchema";
+import toast from "react-hot-toast";
 
 export default function IngredientForm() {
   const { onSubmit, handleChange, form, pending, firstTouch, errors } =
-    useIngredientForm();
+    useForm<TIngredientsFormData>(
+      ingredientsSchema(),
+      { name: "", category: "", unit: "", pricePerUnit: 0, description: "" },
+      createIngredient,
+      onSuccess,
+    );
+
+  function onSuccess() {
+    toast.success("Ingredient created successfully!");
+    form.name = "";
+    form.category = "";
+    form.unit = "";
+    form.pricePerUnit = 0;
+    form.description = "";
+  }
+
   return (
     <form
       onSubmit={onSubmit}
@@ -30,6 +50,7 @@ export default function IngredientForm() {
           <SimpleSelect
             label="Category"
             placeholder="Select category"
+            optionValue={form.category}
             options={CATEGORY_OPTIONS}
             handleChange={(newValue) => handleChange("category", newValue)}
           />
@@ -41,6 +62,7 @@ export default function IngredientForm() {
           <SimpleSelect
             label="Unit of Measurement"
             placeholder="Select unit"
+            optionValue={form.unit}
             options={UNIT_OPTIONS}
             handleChange={(newValue) => handleChange("unit", newValue)}
           />
