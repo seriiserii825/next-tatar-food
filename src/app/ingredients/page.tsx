@@ -1,3 +1,4 @@
+import IngredientsTable from "@/components/UI/IngredientsTable";
 import PageContent from "@/components/UI/PageContent";
 import Title from "@/components/UI/Title";
 import IngredientForm from "@/forms/IngredientForm";
@@ -11,6 +12,7 @@ export default function Page() {
         <div className="mx-auto max-w-xl">
           <h3 className="mb-4 text-2xl font-semibold">Add New Ingredient</h3>
           <IngredientForm />
+          <IngredientsTable />
         </div>
       </div>
     </>

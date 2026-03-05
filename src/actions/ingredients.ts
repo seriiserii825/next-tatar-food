@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { TIngredientsFormData } from "@/schemas/ingredientsSchema";
 
 export default async function createIngredient(formData: TIngredientsFormData) {
-  const res = await prisma.ingredient.create({
+  await prisma.ingredient.create({
     data: {
       name: formData.name,
       category: formData.category,

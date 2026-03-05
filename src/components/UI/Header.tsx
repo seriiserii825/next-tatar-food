@@ -4,11 +4,11 @@ import Logo from "./Logo";
 import Menu from "./Menu";
 
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = [false];
+  const [isLoggedIn] = [false];
   return (
     <header>
       <div className="container">
-        <div className="w-full mx-auto py-6 flex items-center justify-between">
+        <div className="mx-auto flex w-full items-center justify-between py-6">
           <Logo />
           <Menu />
           {isLoggedIn ? <AddRecipeBtn /> : <AuthMenu />}
