@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -20,6 +20,7 @@ interface SimpleSelectProps {
   label: string;
   placeholder: string;
   options: readonly IOption[];
+  optionValue: string;
   handleChange: (newValue: string) => void;
 }
 
@@ -27,9 +28,14 @@ export default function SimpleSelect({
   label,
   placeholder,
   options,
+  optionValue,
   handleChange,
 }: SimpleSelectProps) {
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    setValue(optionValue);
+  }, [optionValue]);
 
   return (
     <Select
