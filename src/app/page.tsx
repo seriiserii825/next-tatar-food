@@ -1,5 +1,8 @@
+"use client";
+
 import ErrorToast from "@/components/UI/ErrorToast";
 import Title from "@/components/UI/Title";
+import CreateRecipeForm from "@/forms/CreateRecipeForm";
 import { Suspense } from "react";
 
 export default function Home() {
@@ -10,6 +13,7 @@ export default function Home() {
       </Suspense>
       <Title />
       <section className="mx-auto mt-16 max-w-7xl px-6 pb-16">
+        <CreateRecipeForm />
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <article className="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:shadow-xl">
             <div className="aspect-[4/3] overflow-hidden">
