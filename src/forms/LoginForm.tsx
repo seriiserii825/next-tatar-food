@@ -1,13 +1,36 @@
 "use client";
 
+import login from "@/actions/login";
 import { Input } from "@/components/ui/input";
 import ShowError from "@/components/UI/ShowError";
-import useLoginForm from "@/hooks/useLoginForm";
+import useForm from "@/hooks/useForm";
+import loginSchema, { TLoginFormData } from "@/schemas/loginSchema";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export function LoginForm() {
-  const { form, handleChange, errors, firstTouch, onSubmit } = useLoginForm();
+  const router = useRouter();
+  const { form, handleChange, errors, firstTouch, onSubmit } =
+    useForm<TLoginFormData>(
+      loginSchema(),
+      {
+        email: "",
+        password: "",
+      },
+      login,
+      onSuccess,
+    );
+
+  function onSuccess() {
+    toast.success("Logged in successfully!");
+    router.push("/about");
+  }
   return (
-    <form onSubmit={onSubmit} autoComplete="off" className="max-w-lg mx-auto flex flex-col gap-4">
+    <form
+      onSubmit={onSubmit}
+      autoComplete="off"
+      className="mx-auto flex max-w-lg flex-col gap-4"
+    >
       <Input
         type="email"
         name="my-email"
@@ -16,7 +39,7 @@ export function LoginForm() {
         aria-invalid={errors.email && firstTouch}
         value={form.email}
         onChange={(e) => handleChange("email", e.target.value)}
-        className="border p-2 rounded"
+        className="rounded border p-2"
       />
       {firstTouch && errors.email && <ShowError error={errors.email[0]} />}
       <Input
@@ -27,11 +50,13 @@ export function LoginForm() {
         aria-invalid={errors.password && firstTouch}
         value={form.password}
         onChange={(e) => handleChange("password", e.target.value)}
-        className="border p-2 rounded"
+        className="rounded border p-2"
       />
-      {firstTouch && errors.password && <ShowError error={errors.password[0]} />}
+      {firstTouch && errors.password && (
+        <ShowError error={errors.password[0]} />
+      )}
 
-      <button type="submit" className=" bg-blue-500 text-white p-2 rounded">
+      <button type="submit" className="rounded bg-blue-500 p-2 text-white">
         Login
       </button>
     </form>
