@@ -6,3 +6,8 @@ export interface IIngredient {
   pricePerUnit: number | null;
   description: string;
 }
+
+export interface ISelectedIngredient {
+  id: string;
+  quantity: number;
+}

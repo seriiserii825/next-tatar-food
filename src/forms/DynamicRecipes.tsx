@@ -1,39 +1,41 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { IIngredient } from "@/interfaces/IIngredients";
+import { IIngredient, ISelectedIngredient } from "@/interfaces/IIngredients";
 import { useEffect, useState } from "react";
 import DynamicRecipe from "./DynamicRecipe";
 
 interface DynamicRecipesProps {
   ingredients: IIngredient[];
+  updateDynamicIngredients: (ingredients: ISelectedIngredient[]) => void;
 }
 
-interface ISelectedIngredient {
-  id: string;
-  quantity: number;
-}
-
-export default function DynamicRecipes({ ingredients }: DynamicRecipesProps) {
+export default function DynamicRecipes({
+  ingredients,
+  updateDynamicIngredients,
+}: DynamicRecipesProps) {
   const [ingredientsOptions, setIngredientsOptions] = useState<
     { label: string; value: string }[]
   >([]);
 
-  const [selectedIngredients, setSelectedIngredients] = useState<ISelectedIngredient[]>([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<
+    ISelectedIngredient[]
+  >([]);
 
   const [count, setCount] = useState(1);
 
   function updateSelected(ingredientId: string, quantity: number) {
-    setSelectedIngredients((prev) => {
-      const existing = prev.find((item) => item.id === ingredientId);
-      if (existing) {
-        return prev.map((item) =>
+    const existing = selectedIngredients.find(
+      (item) => item.id === ingredientId,
+    );
+    const next = existing
+      ? selectedIngredients.map((item) =>
           item.id === ingredientId ? { ...item, quantity } : item,
-        );
-      } else {
-        return [...prev, { id: ingredientId, quantity }];
-      }
-    });
+        )
+      : [...selectedIngredients, { id: ingredientId, quantity }];
+
+    setSelectedIngredients(next);
+    updateDynamicIngredients(next);
   }
 
   function addByMaxCount() {
@@ -46,6 +48,8 @@ export default function DynamicRecipes({ ingredients }: DynamicRecipesProps) {
   function deleteByIndex(index: number) {
     setSelectedIngredients((prev) => prev.filter((_, i) => i !== index));
     setCount(count - 1);
+
+    updateDynamicIngredients(selectedIngredients.filter((_, i) => i !== index));
   }
 
   useEffect(() => {

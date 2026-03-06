@@ -1,11 +1,9 @@
 import { z } from "zod";
-import ingredientsSchema from "./ingredientsSchema";
 
 export function recipeIngredientSchema() {
   const schema = z.object({
-    ingredientId: z.string().min(1, "Ingredient name is required"),
+    id: z.string().min(1, "Ingredient ID is required"),
     quantity: z.number().positive("Quantity must be a positive number"),
-    ingredient: ingredientsSchema(),
   });
   return schema;
 }

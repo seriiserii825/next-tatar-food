@@ -22,6 +22,10 @@ export default function DynamicRecipe({
   const [selectedIngredient, setSelectedIngredient] = useState<string>("");
   const [quantity, setQuantity] = useState("1");
 
+  function updateSelectedIngredient(value: string) {
+    setSelectedIngredient(value);
+  }
+
   useEffect(() => {
     const num = Number(quantity);
     if (selectedIngredient && num > 0) {
@@ -37,7 +41,7 @@ export default function DynamicRecipe({
           placeholder="Select ingredient"
           options={ingredients}
           optionValue={selectedIngredient}
-          handleChange={(value) => setSelectedIngredient(value)}
+          handleChange={updateSelectedIngredient}
         />
       </div>
       <Input

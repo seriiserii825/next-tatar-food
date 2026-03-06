@@ -1,39 +1,48 @@
+"use client";
+
 import { getIngredients } from "@/actions/ingredients";
+import { createRecipe } from "@/actions/recipes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ShowError from "@/components/UI/ShowError";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import useForm from "@/hooks/useForm";
 import useQuery from "@/hooks/useQuery";
-import { useState } from "react";
-import DynamicRecipes from "./DynamicRecipes";
+import { recipeSchema, TRecipeFormData } from "@/schemas/recipeSchema";
 import { Loader } from "lucide-react";
+import toast from "react-hot-toast";
+import DynamicRecipes from "./DynamicRecipes";
 
 export default function CreateRecipeForm() {
   const { data, loading, error, refetch } = useQuery(getIngredients);
 
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    imageUrl: "",
-  });
+  const { onSubmit, handleChange, form, pending, firstTouch, errors } =
+    useForm<TRecipeFormData>(
+      recipeSchema(),
+      {
+        name: "",
+        description: "",
+        imageUrl: "",
+        ingredients: [],
+      },
+      createRecipe,
+      onSuccess,
+    );
 
-  const [errors, setErrors] = useState({
-    name: "",
-    description: "",
-    imageUrl: "",
-  });
-
-  const [pending, setPending] = useState(false);
-  const [firstTouch, setFirstTouch] = useState(false);
-
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  function onSuccess() {
+    toast.success("Recipe created successfully!");
+    form.name = "";
+    form.description = "";
+    form.imageUrl = "";
+    form.ingredients = [];
   }
 
-  function handleChange(field: string, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    if (!firstTouch) setFirstTouch(true);
+  function updateDynamicIngredients(
+    ingredients: { id: string; quantity: number }[],
+  ) {
+    form.ingredients = ingredients;
+    // setForm((prev) => ({ ...prev, ingredients }));
   }
 
   return (
@@ -46,7 +55,7 @@ export default function CreateRecipeForm() {
         <Input
           type="text"
           className="w-full"
-          placeholder="Ingredient Name"
+          placeholder="Recipe Name"
           value={form.name}
           onChange={(e) => handleChange("name", e.target.value)}
         />
@@ -74,7 +83,10 @@ export default function CreateRecipeForm() {
         ) : error ? (
           <ShowError error={error} />
         ) : (
-          <DynamicRecipes ingredients={data || []} />
+          <DynamicRecipes
+            updateDynamicIngredients={updateDynamicIngredients}
+            ingredients={data || []}
+          />
         )}
         <div className="flex">
           <Button disabled={pending} type="submit" variant={"secondary"}>
