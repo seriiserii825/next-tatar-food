@@ -1,13 +1,13 @@
 services:
   postgres:
-    image: 'postgres:16'
+    image: "postgres:16"
     restart: always
     environment:
-      POSTGRES_USER: '${DB_USERNAME}'
-      POSTGRES_PASSWORD: '${DB_PASSWORD}'
-      POSTGRES_DB: '${DB_NAME}'
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
     ports:
-      - '${DB_PORT}:5432'
+      - "${DB_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./pg_backups:/pgadmin/backups

@@ -19,9 +19,7 @@ export default function DynamicRecipes({ ingredients }: DynamicRecipesProps) {
     { label: string; value: string }[]
   >([]);
 
-  const [selectedIngredients, setSelectedIngredients] = useState<
-    ISelectedIngredient[]
-  >([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<ISelectedIngredient[]>([]);
 
   const [count, setCount] = useState(1);
 
