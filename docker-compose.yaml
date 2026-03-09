@@ -1,7 +1,7 @@
 services:
   postgres:
     image: "postgres:16"
-    restart: always
+    restart: no
     environment:
       POSTGRES_USER: "${DB_USERNAME}"
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
@@ -16,7 +16,7 @@ services:
 
   adminer: # Легче, чем pgAdmin!
     image: adminer
-    restart: always
+    restart: no
     ports:
       - 8089:8080
     environment:
