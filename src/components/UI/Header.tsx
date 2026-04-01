@@ -1,4 +1,15 @@
+import Link from "next/link";
 import Button from "./Button";
+interface IMenuItem {
+  label: string;
+  href: string;
+}
+const menu_items: IMenuItem[] = [
+  { label: "Home", href: "/" },
+  { label: "Recipes", href: "/recipes" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Header() {
   return (
@@ -17,15 +28,14 @@ export default function Header() {
         </div>
 
         <nav className="flex items-center gap-9 text-sm font-medium">
-          <a href="#" className="hover:text-warm-accentLight transition-colors">
-            Recipes
-          </a>
-          <a href="#" className="hover:text-warm-accentLight transition-colors">
-            Ingredients
-          </a>
-          <a href="#" className="hover:text-warm-accentLight transition-colors">
-            About Us
-          </a>
+          {menu_items.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="hover:text-warm-accentLight transition-colors">
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="flex items-center gap-5">
