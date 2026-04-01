@@ -6,7 +6,7 @@ export default function HeaderMenuLoggedOut() {
       <Button variant="primary" size="sm">
         Login
       </Button>
-      <Button variant="secondary" size="sm">
+      <Button href="/register" as="link" variant="secondary" size="sm">
         Register
       </Button>
     </div>
