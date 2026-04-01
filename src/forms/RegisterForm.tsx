@@ -2,13 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { registerZodSchema } from "@/zodSchemas/registerZodSchema";
 import Button from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
-
-// Тип формы на основе Zod
-type RegisterForm = z.infer<typeof registerZodSchema>;
+import { TRegisterForm } from "@/types/TRegisterForm";
+import { registerUser } from "@/app/actions/auth";
 
 export default function RegisterForm() {
   const {
@@ -16,16 +14,15 @@ export default function RegisterForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<RegisterForm>({
+  } = useForm<TRegisterForm>({
     resolver: zodResolver(registerZodSchema),
     mode: "onBlur", // или "onChange"
   });
 
-  const onSubmit = async (data: RegisterForm) => {
+  const onSubmit = async (formData: TRegisterForm) => {
     try {
-      console.log("Registration data:", data);
-      // Здесь будет твой API запрос
-      alert("Registration successful! (demo)");
+      const user = await registerUser(formData);
+      console.log(user, "user");
       reset();
     } catch (error) {
       console.error(error);
