@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import Button from "./Button";
 import { usePathname } from "next/navigation";
+import HeaderMenuLoggedIn from "./HeaderMenuLoggedIn";
+import HeaderMenuLoggedOut from "./HeaderMenuLoggedOut";
 interface IMenuItem {
   label: string;
   href: string;
 }
 
 export default function Header() {
+  const isAuthenticated = false;
+
   const menu_items: IMenuItem[] = [
     { label: "Home", href: "/" },
     { label: "Recipes", href: "/recipes" },
@@ -50,21 +53,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-
-        <div className="flex items-center gap-5">
-          <div className="text-sm">
-            Hello,{" "}
-            <a
-              target="_blank"
-              href="maito:gus@mail.ru"
-              className="text-warm-accent-light font-medium">
-              gus@mail.ru
-            </a>
-          </div>
-          <Button variant="secondary" size="sm">
-            Logout
-          </Button>
-        </div>
+        {isAuthenticated ? <HeaderMenuLoggedIn /> : <HeaderMenuLoggedOut />}
       </div>
     </header>
   );
