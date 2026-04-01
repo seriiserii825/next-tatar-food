@@ -1,3 +1,5 @@
+import Button from "@/components/UI/Button";
+
 export default function Home() {
   return (
     <>
@@ -5,10 +7,9 @@ export default function Home() {
         <h2 className="font-display text-5xl font-bold tracking-tighter text-warm-accentLight">
           Recipes
         </h2>
-        <button className="bg-gradient-to-r from-warm-accent to-warm-accentLight hover:from-warm-accentLight hover:to-warm-accent text-warm-bg px-8 py-4 rounded-3xl font-semibold flex items-center gap-3 transition-all active:scale-95 shadow-xl shadow-warm-accent/40">
-          <i className="fas fa-plus"></i>
-          <span>Add Recipe</span>
-        </button>
+        <Button variant="primary" size="md">
+          Add new recipe
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
