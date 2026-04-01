@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 export default function Header() {
   return (
     <header className="bg-warm-card border-b border-warm-accent/30">
@@ -30,9 +32,9 @@ export default function Header() {
           <div className="text-sm">
             Hello, <span className="text-warm-accentLight font-medium">gus@mail.ru</span>
           </div>
-          <button className="bg-warm-accent hover:bg-warm-accentLight text-warm-bg px-6 py-2.5 rounded-2xl font-semibold transition-all active:scale-95">
+          <Button variant="secondary" size="sm">
             Logout
-          </button>
+          </Button>
         </div>
       </div>
     </header>
