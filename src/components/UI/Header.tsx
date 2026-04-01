@@ -36,7 +36,7 @@ export default function Header() {
             🍲
           </div>
           <div>
-            <h1 className="font-display text-3xl font-bold tracking-tight text-warm-accentLight">
+            <h1 className="font-display text-3xl font-bold tracking-tight text-warm-accent-light">
               Tatar Cuisine
             </h1>
             <p className="text-xs text-warm-accent -mt-1 tracking-widest">TASTE OF TRADITION</p>
@@ -53,7 +53,13 @@ export default function Header() {
 
         <div className="flex items-center gap-5">
           <div className="text-sm">
-            Hello, <span className="text-warm-accentLight font-medium">gus@mail.ru</span>
+            Hello,{" "}
+            <a
+              target="_blank"
+              href="maito:gus@mail.ru"
+              className="text-warm-accent-light font-medium">
+              gus@mail.ru
+            </a>
           </div>
           <Button variant="secondary" size="sm">
             Logout
